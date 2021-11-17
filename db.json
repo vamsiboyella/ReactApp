@@ -1,17 +1,17 @@
 {
   "users": [
     {
-      "firstName": "vamsikrishna",
-      "lastName": "boyallabrahmaiah",
-      "email": "vamsi.boyella@yyymail.com",
-      "status": "active",
+      "firstName": "Vamsikrishna",
+      "lastName": "Boyella",
+      "email": "vamsikrishnaboyella@gmsdasdail.com",
+      "status": true,
       "id": 1
     },
     {
       "firstName": "Sandeep",
       "lastName": "Tadikonda",
       "email": "sandeep.tadikonda@mail.com",
-      "status": "Active",
+      "status": true,
       "id": 3
     }
   ]

@@ -1,15 +1,16 @@
 import React, {useState, useEffect} from 'react';
-import { useParams } from 'react-router';
+import { useParams ,useHistory } from 'react-router';
 import { update,getUser } from '../service/userService';
 
 const EditUser =  () => { 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
-    const [status, setStatus] = useState('');
+    const [status, setStatus] = useState();
 
     let {id}= useParams();
-    
+    const history = useHistory();
+
     useEffect(() => {       
      getUser(id).then((user) => {
      setFirstName(user.firstName);
@@ -32,13 +33,14 @@ const EditUser =  () => {
         setEmail(event.target.value);
     }
     const handleStatusChange = (event) => {
-        event.preventDefault();
-        setStatus(event.target.value);
+        event.preventDefault();       
+        setStatus(event.target.checked);
     }
     const handleSubmit = async (event) => {
         event.preventDefault();
         await update({firstName, lastName, email, status,id});   
-        // history.push('/index'); 
+     
+        history.push('/index'); 
     } 
  
   return (
@@ -70,13 +72,15 @@ const EditUser =  () => {
                   onChange={handleEmailChange}
                   />
             </div>
-            <div  className="form-group">
-                <label>Status: </label>
-                <input type="text" 
-                  className="form-control"
-                  value ={status}                    
+            <div className="form-group">
+            <div  className="form-check">
+                <label className="form-check-label">Status</label>
+                <input type="checkbox"           
+                  checked={status}    
+                  className="form-check-input"              
                   onChange={handleStatusChange}
                   />
+            </div>
             </div>
             <div className="form-group" style={{ marginTop: 10 }}>
                 <input type="submit" 

@@ -26,16 +26,16 @@ export const getUser = async (id) => {
 }
 
 export const save = async (user) => {
-    const users = await getUsers()
+  
     await axios({
         method: 'post',
         url: 'http://localhost:3004/users',
-        data: {...user, id: users.length+1}
+        data: {...user}
     })
 }
 
 export const update = async (user) => {
-    const users = await getUsers()
+   
     await axios({
         method: 'put',
         url: 'http://localhost:3004/users/'+user.id,

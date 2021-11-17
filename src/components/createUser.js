@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router';
 import { save } from '../service/userService';
 
-const CreateUser =  ({refreshData}) => {
+const CreateUser =  () => {
  
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
-    const [status, setStatus] = useState('');
-
+    const [status, setStatus] = useState(false);
+    const history = useHistory();
     const handleFirstNameChange = (event) => {
         event.preventDefault();
         setFirstName(event.target.value);
@@ -21,12 +22,14 @@ const CreateUser =  ({refreshData}) => {
         setEmail(event.target.value);
     }
     const handleStatusChange = (event) => {
-        event.preventDefault();
-        setStatus(event.target.value);
+        event.preventDefault();      
+        setStatus(!status);
     }
     const handleSubmit = async (event) => {
         event.preventDefault();
-        await save({firstName, lastName, email, status});       
+        await save({firstName, lastName, email, status});     
+    
+        history.push('/index');   
     }
  
     return (
@@ -59,12 +62,15 @@ const CreateUser =  ({refreshData}) => {
                       />
                 </div>
                 <div className="form-group">
-                    <label>Status: </label>
-                    <input type="text" 
-                      className="form-control"
-                      name ={'status'}                    
+                <div className="form-check">
+                    <label className="form-check-label">Status</label>
+                    <input type="checkbox"                       
+                      name ={'status'}  
+                      checked={status}    
+                      className="form-check-input"                                     
                       onChange={handleStatusChange}
                       />
+                </div>
                 </div>
                 <div className="form-group" style={{ marginTop: 10 }}>
                     <input type="submit" 

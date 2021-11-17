@@ -1,43 +1,38 @@
-import React, { Component } from 'react';
+import React, {useState  } from 'react';
 import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router';
 import { deleteUser } from '../service/userService';
 
-class Table extends Component {
-
-  constructor(props) {
-        super(props);
-        this.delete = this.delete.bind(this);
-    }
-    delete() {
-        deleteUser(this.props.obj.id);
-        // axios.get('http://localhost:3004/users/'+this.props.obj.id)
-        //     .then(console.log('Deleted'))
-        //     .catch(err => console.log(err))
-    }
-  render() {
+const Table =({obj}) => {
+    
+    const handleDeleteUser = async(event) => {
+        event.preventDefault();
+        await deleteUser(obj.id);
+        window.location.reload(false);
+    } 
     return (
         <tr>
           <td>
-            {this.props.obj.firstName}
+            {obj.firstName}
           </td>
           <td>
-            {this.props.obj.lastName}
+            {obj.lastName}
           </td>
           <td>
-            {this.props.obj.email}
+            {obj.email}
           </td>
           <td>
-            {this.props.obj.status}
+            {obj.status?'Active':'Inactive'}
           </td>
           <td>
-            <Link to={"/edit/"+this.props.obj.id} className="btn btn-primary">Edit</Link>
+            <Link to={"/edit/"+obj.id} className="btn btn-primary">Edit</Link>
           </td>
           <td>
-            <button onClick={this.delete} className="btn btn-danger">Delete</button>
+            <button onClick={handleDeleteUser} className="btn btn-danger">Delete</button>
           </td>
         </tr>
     );
-  }
+  
 }
 
 export default Table;

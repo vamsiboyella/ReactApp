@@ -7,15 +7,18 @@ export default class DisplayUsers extends Component {
   constructor(props) {
       super(props);
       this.state = {users: []};
+   
     }
     componentDidMount(){
-         getUsers().then((data) =>  this.setState({ users: data })  );            
+        this.fetchData();                   
     }
-    tabRow(){
-        console.log(this.state.users)
-      return this.state.users.map(function(object, i){
-          console.log(object)
-          console.log(i)
+
+    fetchData(){         
+        getUsers().then((data) =>  this.setState({ users: data })); 
+    }
+
+    tabRow(){      
+      return this.state.users.map((object, i)=>{        
           return <Table obj={object} key={i} />;
       });
     }
