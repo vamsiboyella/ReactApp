@@ -8,6 +8,8 @@ const CreateUser =  () => {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [status, setStatus] = useState(false);
+    const [validForm, setValidForm] =useState(false);
+
     const history = useHistory();
     const handleFirstNameChange = (event) => {
         event.preventDefault();
@@ -17,9 +19,24 @@ const CreateUser =  () => {
         event.preventDefault();
         setLastName(event.target.value);
     }
-    const handleEmailChange = (event) => {
+    const handleEmailChange = (event) => {       
         event.preventDefault();
-        setEmail(event.target.value);
+        let text = event.target.value;
+        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+        if (reg.test(text) === false) {
+          console.log("Email is Not Correct");   
+          //highlighting the inputbox and preventing submit can be done
+          //setValidForm(false);
+
+          setEmail(text);      
+          return false;
+        }
+        else {
+         //setValidForm(true);
+          setEmail(text);
+          console.log("Email is Correct");
+        }
+       
     }
     const handleStatusChange = (event) => {
         event.preventDefault();      
@@ -27,6 +44,8 @@ const CreateUser =  () => {
     }
     const handleSubmit = async (event) => {
         event.preventDefault();
+        //if(validForm) 
+        // Will be proceeding further
         await save({firstName, lastName, email, status});     
     
         history.push('/index');   

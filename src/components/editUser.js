@@ -30,7 +30,18 @@ const EditUser =  () => {
     }
     const handleEmailChange = (event) => {
         event.preventDefault();
-        setEmail(event.target.value);
+        let text = event.target.value;
+        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
+        if (reg.test(text) === false) {
+          console.log("Email is Not Correct");   
+          //highlighting the inputbox and preventing submit can be done
+          setEmail(text);      
+          return false;
+        }
+        else {
+          setEmail(text);
+          console.log("Email is Correct");
+        }
     }
     const handleStatusChange = (event) => {
         event.preventDefault();       
@@ -38,7 +49,7 @@ const EditUser =  () => {
     }
     const handleSubmit = async (event) => {
         event.preventDefault();
-        await update({firstName, lastName, email, status,id});   
+        await update({firstName, lastName, email, status,id});  
      
         history.push('/index'); 
     } 
